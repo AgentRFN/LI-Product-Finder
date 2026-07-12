@@ -1332,8 +1332,9 @@ function submitLead() {
   };
 
   // Try Google Sheets submission
-  if (GS_CONFIG.SCRIPT_URL && GS_CONFIG.SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbyAO80tdhrWqndZ-b_mWFMWrwsW0CvHMsKyAKXMdt3SgtmZj2ESsyxTspPrM3V3tuOy/exec') {
-    fetch(GS_CONFIG.SCRIPT_URL, {
+  if (GS_CONFIG.SCRIPT_URL && GS_CONFIG.SCRIPT_URL !== 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
+    // send data to Google Sheets
+     fetch(GS_CONFIG.SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
       headers: {'Content-Type': 'application/json'},
@@ -1343,8 +1344,7 @@ function submitLead() {
     }).catch(() => {
       showSheetsStatus('error');
     });
-  }
-
+}
   console.log('Lead captured:', payload);
 
   setTimeout(() => {
