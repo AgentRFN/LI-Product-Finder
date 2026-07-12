@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>PruLife UK — Find Your Plan</title>
+<title>Life Insurance Plan Finder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
@@ -185,7 +185,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.55);padding:40px 0;font-siz
       <div class="nav-logo">
         <svg viewBox="0 0 18 18" fill="none"><path d="M9 1.5L11 6.5H16.5L12 9.8L13.8 15L9 12L4.2 15L6 9.8L1.5 6.5H7L9 1.5Z" fill="white"/></svg>
       </div>
-      <span class="nav-brand-text"><span>PRU</span>Life UK Philippines</span>
+      <span class="nav-brand-text"><span>LIFE</span>INSURANCE Philippines</span>
     </div>
     <a href="#finder" class="nav-cta">Find My Plan →</a>
   </div>
@@ -274,12 +274,12 @@ footer{background:var(--ink);color:rgba(255,255,255,.55);padding:40px 0;font-siz
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="footer-brand">PRULife UK Philippines</div>
-      <div>Pru Life Insurance Corporation of U.K.</div>
-      <div>Registered life insurance company in the Philippines</div>
+      <div class="footer-brand">ROY FRANCIS NAVEA</div>
+      <div>Licensed Financial Advisor</div>
+      <div>Life Insurance Brand: PruLife UK</div>
     </div>
     <div style="max-width:640px;">
-      This tool is for general information and educational purposes only. Product details are based on official Pru Life UK product primers and are subject to change. Recommendations are indicative and are not a substitute for a formal Financial Needs Analysis (FNA) conducted by a licensed Pru Life UK financial advisor. All insurance products are subject to full underwriting, eligibility requirements, and policy terms and conditions. Investment returns on VUL products are not guaranteed and are subject to market risks. Premium amounts shown are indicative — actual premiums depend on age, sum assured, payment mode, and underwriting class.
+      This tool is for general information and educational purposes only. Product details are based on official Pru Life UK product primers and are subject to change. Recommendations are indicative and are not a substitute for a formal Financial Needs Analysis (FNA) conducted by a licensed financial advisor. All insurance products are subject to full underwriting, eligibility requirements, and policy terms and conditions. Investment returns on VUL products are not guaranteed and are subject to market risks. Premium amounts shown are indicative — actual premiums depend on age, sum assured, payment mode, and underwriting class.
     </div>
   </div>
 </footer>
@@ -1332,7 +1332,7 @@ function submitLead() {
   };
 
   // Try Google Sheets submission
-  if (GS_CONFIG.SCRIPT_URL && GS_CONFIG.SCRIPT_URL !== 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
+  if (GS_CONFIG.SCRIPT_URL && GS_CONFIG.SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbyAO80tdhrWqndZ-b_mWFMWrwsW0CvHMsKyAKXMdt3SgtmZj2ESsyxTspPrM3V3tuOy/exec') {
     fetch(GS_CONFIG.SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
@@ -1369,7 +1369,7 @@ function sendToAdvisor() {
   const {goal, type, budget} = state.answers;
   const route = routeProduct(goal, type, budget);
   const prod = route ? PRODUCT_DB[route.p] : null;
-  const subject = `PRULife UK Inquiry — ${prod?.name||'Custom Plan'} — ${fname} ${lname}`;
+  const subject = `Product Inquiry — ${prod?.name||'Custom Plan'} — ${fname} ${lname}`;
   const body = `Hi,\n\nI completed the Pru Life UK Plan Finder and received the following recommendation:\n\nClient details:\nName: ${fname} ${lname}\nMobile: ${mobile}\nEmail: ${email}\nBirthday: ${bday}\nOccupation: ${occ}\n\nFinancial profile:\nGoal: ${goal}\nPlan type: ${type}\nBudget tier: ${budget}\nRecommended plan: ${prod?.name||'Custom'}\n\nPlease contact me to schedule a free Financial Needs Analysis (FNA) consultation. Thank you.`;
   window.location.href = `mailto:your.advisor@prulifeuk.com.ph?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
