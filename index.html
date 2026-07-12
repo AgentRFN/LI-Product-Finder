@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PruLife UK — Find Your Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',system-ui,sans-serif;background:#F7F5F2;color:#1A1814;min-height:100vh;line-height:1.6;}
+:root{
+  --red:#C8102E;--red-dark:#A00D24;--red-light:#FDECEA;--red-mid:#F5C6CB;
+  --cream:#F7F5F2;--white:#FFFFFF;--ink:#1A1814;--ink2:#4A4844;--ink3:#8A8880;
+  --border:#E2DED8;--border2:#CCC8C2;--surface:#FFFFFF;--surface2:#F0EDE8;
+  --radius:12px;--radius-sm:8px;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.10);
+}
+.page{max-width:1100px;margin:0 auto;padding:0 24px;}
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{display:flex;align-items:center;gap:10px;}
+.nav-logo{width:32px;height:32px;border-radius:7px;background:var(--red);display:flex;align-items:center;justify-content:center;}
+.nav-logo svg{width:18px;height:18px;}
+.nav-brand-text{font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+.nav-brand-text span{color:var(--red);}
+.nav-cta{font-size:13px;font-weight:500;color:var(--red);background:var(--red-light);border:1px solid var(--red-mid);border-radius:20px;padding:6px 14px;text-decoration:none;transition:background .15s;}
+.nav-cta:hover{background:var(--red-mid);}
+.hero{padding:64px 0 40px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+@media(max-width:768px){.hero{grid-template-columns:1fr;padding:40px 0 32px;}.hero-visual{display:none!important;}}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--red);background:var(--red-light);border:1px solid var(--red-mid);border-radius:20px;padding:4px 10px;margin-bottom:16px;letter-spacing:.03em;text-transform:uppercase;}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--red);}
+.hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(32px,4vw,48px);line-height:1.15;color:var(--ink);margin-bottom:16px;letter-spacing:-.02em;}
+.hero h1 em{color:var(--red);font-style:italic;}
+.hero-sub{font-size:16px;color:var(--ink2);line-height:1.7;margin-bottom:28px;max-width:440px;}
+.hero-stats{display:flex;gap:24px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;}
+.stat-num{font-size:22px;font-weight:600;color:var(--ink);}
+.stat-label{font-size:12px;color:var(--ink3);}
+.hero-visual{display:flex;justify-content:flex-end;}
+.hero-card-stack{position:relative;width:320px;height:220px;}
+.hcard{position:absolute;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);width:260px;}
+.hcard:nth-child(1){top:0;left:40px;transform:rotate(-3deg);}
+.hcard:nth-child(2){top:30px;left:10px;transform:rotate(1deg);z-index:2;}
+.hcard:nth-child(3){top:60px;left:50px;z-index:3;}
+.hcard-label{font-size:10px;font-weight:600;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px;}
+.hcard-name{font-size:14px;font-weight:600;color:var(--ink);}
+.hcard-desc{font-size:12px;color:var(--ink2);margin-top:3px;}
+.hcard-tag{display:inline-block;margin-top:8px;font-size:10px;font-weight:500;background:var(--red-light);color:var(--red);border-radius:20px;padding:2px 8px;}
+#finder{background:var(--white);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);max-width:680px;margin:0 auto 80px;overflow:hidden;}
+.finder-header{background:var(--red);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
+.finder-title{font-size:15px;font-weight:600;color:var(--white);}
+.finder-sub{font-size:12px;color:rgba(255,255,255,.75);margin-top:2px;}
+.finder-body{padding:24px;}
+.progress-wrap{margin-bottom:20px;}
+.progress-steps{display:flex;align-items:center;margin-bottom:8px;}
+.prog-step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative;}
+.prog-step:not(:last-child)::after{content:'';position:absolute;top:13px;left:50%;width:100%;height:1px;background:var(--border);z-index:0;transition:background .3s;}
+.prog-step.done:not(:last-child)::after{background:var(--red);}
+.prog-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;position:relative;z-index:1;transition:all .25s;}
+.prog-dot.pending{background:var(--surface2);color:var(--ink3);border:1px solid var(--border);}
+.prog-dot.active{background:var(--red);color:var(--white);box-shadow:0 0 0 4px var(--red-light);}
+.prog-dot.done{background:var(--red);color:var(--white);}
+.prog-label{font-size:10px;color:var(--ink3);margin-top:4px;text-align:center;white-space:nowrap;}
+.prog-label.active{color:var(--red);font-weight:500;}
+.breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:11px;color:var(--ink3);margin-bottom:16px;min-height:18px;}
+.breadcrumb .crumb{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:2px 8px;color:var(--ink2);font-weight:500;}
+.breadcrumb .sep{color:var(--border2);}
+.step-label{font-size:11px;font-weight:600;color:var(--red);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.step-question{font-size:17px;font-weight:600;color:var(--ink);line-height:1.35;margin-bottom:4px;}
+.step-hint{font-size:13px;color:var(--ink3);margin-bottom:16px;}
+.choices{display:flex;flex-direction:column;gap:8px;}
+.choice-btn{display:flex;align-items:flex-start;gap:12px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;cursor:pointer;text-align:left;width:100%;transition:border-color .15s,background .15s,box-shadow .15s;position:relative;}
+.choice-btn:hover{border-color:var(--border2);background:var(--white);box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.choice-btn.selected{border-color:var(--red);background:var(--red-light);box-shadow:0 0 0 3px rgba(200,16,46,.08);}
+.choice-icon{width:32px;height:32px;border-radius:7px;background:var(--white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;}
+.choice-btn.selected .choice-icon{background:rgba(200,16,46,.08);border-color:var(--red-mid);}
+.choice-label{font-size:14px;font-weight:500;color:var(--ink);line-height:1.3;}
+.choice-desc{font-size:12px;color:var(--ink3);margin-top:2px;line-height:1.4;}
+.sel-dot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border2);flex-shrink:0;margin-top:2px;position:relative;transition:all .15s;}
+.choice-btn.selected .sel-dot{border-color:var(--red);background:var(--red);}
+.choice-btn.selected .sel-dot::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--white);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
+.budget-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+@media(max-width:500px){.budget-grid{grid-template-columns:1fr;}}
+.budget-btn{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;cursor:pointer;text-align:left;width:100%;transition:all .15s;}
+.budget-btn:hover{border-color:var(--border2);background:var(--white);}
+.budget-btn.selected{border-color:var(--red);background:var(--red-light);box-shadow:0 0 0 3px rgba(200,16,46,.08);}
+.budget-amount{font-size:16px;font-weight:600;color:var(--ink);}
+.budget-btn.selected .budget-amount{color:var(--red);}
+.budget-label{font-size:12px;color:var(--ink3);margin-top:2px;}
+.budget-btn.selected .budget-label{color:var(--red);}
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);}
+.btn-back{font-size:13px;font-weight:500;color:var(--ink3);background:none;border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 14px;cursor:pointer;transition:all .15s;}
+.btn-back:hover{color:var(--ink);border-color:var(--border2);}
+.btn-next{font-size:14px;font-weight:600;color:var(--white);background:var(--red);border:none;border-radius:var(--radius-sm);padding:10px 22px;cursor:pointer;transition:background .15s,opacity .15s;}
+.btn-next:hover{background:var(--red-dark);}
+.btn-next:disabled{opacity:.35;cursor:not-allowed;}
+.lead-header{background:linear-gradient(135deg,#1A1814 0%,#3A3430 100%);border-radius:var(--radius-sm);padding:16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:12px;}
+.lead-icon{width:36px;height:36px;border-radius:8px;background:var(--red);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.lead-header-text h3{font-size:14px;font-weight:600;color:#fff;margin-bottom:2px;}
+.lead-header-text p{font-size:12px;color:rgba(255,255,255,.65);}
+.form-row{margin-bottom:14px;}
+.form-row label{display:block;font-size:12px;font-weight:500;color:var(--ink2);margin-bottom:5px;}
+.form-row label span{color:var(--red);}
+.form-row input,.form-row select{width:100%;padding:10px 12px;font-family:inherit;font-size:14px;color:var(--ink);background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);outline:none;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none;appearance:none;}
+.form-row input:focus,.form-row select:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(200,16,46,.1);}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.form-3col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+@media(max-width:500px){.form-2col,.form-3col{grid-template-columns:1fr;}}
+.consent-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-bottom:16px;}
+.consent-check{display:flex;align-items:flex-start;gap:10px;cursor:pointer;}
+.consent-check input[type=checkbox]{width:16px;height:16px;margin-top:1px;flex-shrink:0;accent-color:var(--red);cursor:pointer;}
+.consent-check p{font-size:12px;color:var(--ink3);line-height:1.5;}
+.consent-check strong{color:var(--ink2);}
+.consent-note{font-size:11px;color:var(--ink3);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+.btn-submit{width:100%;font-size:15px;font-weight:600;color:var(--white);background:var(--red);border:none;border-radius:var(--radius-sm);padding:13px;cursor:pointer;transition:background .15s,opacity .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-submit:hover{background:var(--red-dark);}
+.btn-submit:disabled{opacity:.4;cursor:not-allowed;}
+.btn-submit .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none;}
+.btn-submit.loading .spinner{display:block;}
+.btn-submit.loading .btn-text{display:none;}
+.result-hero{background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%);border-radius:var(--radius-sm);padding:18px;margin-bottom:16px;color:#fff;}
+.result-hero-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.8;margin-bottom:6px;}
+.result-hero-name{font-size:20px;font-weight:700;margin-bottom:2px;}
+.result-hero-type{font-size:12px;opacity:.8;}
+.result-hero-desc{font-size:13px;opacity:.9;margin-top:10px;line-height:1.6;}
+.result-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.tag{font-size:11px;font-weight:500;padding:3px 9px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.25);border-radius:20px;color:#fff;}
+.result-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:10px;}
+.result-card-header{padding:10px 14px;border-bottom:1px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:space-between;}
+.result-card-title{font-size:13px;font-weight:600;color:var(--ink);}
+.result-card-body{padding:12px 14px;font-size:13px;color:var(--ink2);line-height:1.6;}
+.result-card-body ul{margin:8px 0 0 16px;}
+.result-card-body li{margin-bottom:4px;}
+.badge-pill{font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;}
+.badge-comp{background:var(--surface2);border:1px solid var(--border);color:var(--ink3);}
+.badge-tip{background:#FFF3CD;border:1px solid #FFE082;color:#7A5C00;}
+.badge-key{background:#E8F5E9;border:1px solid #A5D6A7;color:#2E7D32;}
+.pkg-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;}
+.pkg-table th{background:var(--ink);color:#fff;padding:6px 8px;text-align:left;font-weight:500;}
+.pkg-table td{padding:6px 8px;border-bottom:1px solid var(--border);}
+.pkg-table tr:last-child td{border-bottom:none;}
+.pkg-table tr:nth-child(even) td{background:rgba(0,0,0,.02);}
+.pkg-table td:not(:first-child){text-align:right;}
+.learn-btn{width:100%;padding:11px;margin-top:10px;font-size:14px;font-weight:600;color:var(--red);background:var(--red-light);border:1px solid var(--red-mid);border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;}
+.learn-btn:hover{background:var(--red-mid);}
+.restart-btn{width:100%;padding:10px;margin-top:8px;font-size:13px;color:var(--ink3);background:none;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;}
+.restart-btn:hover{border-color:var(--border2);color:var(--ink);}
+.field-error{font-size:11px;color:var(--red);margin-top:4px;}
+.input-err{border-color:var(--red)!important;}
+.section{padding:60px 0;}
+.section-label{font-size:12px;font-weight:600;color:var(--red);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;}
+.section-title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(26px,3vw,34px);color:var(--ink);margin-bottom:8px;letter-spacing:-.02em;}
+.section-sub{font-size:15px;color:var(--ink2);max-width:520px;}
+.trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:36px;}
+.trust-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+.trust-icon{font-size:24px;margin-bottom:10px;}
+.trust-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.trust-desc{font-size:13px;color:var(--ink3);line-height:1.5;}
+.faq{margin-top:36px;display:flex;flex-direction:column;gap:0;}
+.faq-item{border-bottom:1px solid var(--border);padding:16px 0;cursor:pointer;}
+.faq-q{font-size:14px;font-weight:500;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.faq-q .icon{width:20px;height:20px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;transition:transform .2s;}
+.faq-item.open .icon{transform:rotate(45deg);}
+.faq-a{font-size:13px;color:var(--ink2);line-height:1.6;margin-top:8px;display:none;}
+.faq-item.open .faq-a{display:block;}
+footer{background:var(--ink);color:rgba(255,255,255,.55);padding:40px 0;font-size:12px;line-height:1.7;}
+.footer-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;gap:32px;justify-content:space-between;flex-wrap:wrap;}
+.footer-brand{color:rgba(255,255,255,.8);font-size:13px;font-weight:500;margin-bottom:6px;}
+.sheets-notice{background:#E8F5E9;border:1px solid #A5D6A7;border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:#2E7D32;margin-top:8px;display:flex;align-items:center;gap:8px;}
+.sheets-notice.error{background:#FDECEA;border-color:var(--red-mid);color:var(--red);}
+.fade-in{animation:fadeUp .3s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <div class="nav-logo">
+        <svg viewBox="0 0 18 18" fill="none"><path d="M9 1.5L11 6.5H16.5L12 9.8L13.8 15L9 12L4.2 15L6 9.8L1.5 6.5H7L9 1.5Z" fill="white"/></svg>
+      </div>
+      <span class="nav-brand-text"><span>PRU</span>Life UK Philippines</span>
+    </div>
+    <a href="#finder" class="nav-cta">Find My Plan →</a>
+  </div>
+</nav>
+
+<div class="page">
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Trusted protection for Filipino families</div>
+      <h1>Find the right plan for <em>your</em> future</h1>
+      <p class="hero-sub">Answer 4 simple questions and we'll match you with the Pru Life UK product that fits your goals, budget, and life stage — no jargon, no pressure.</p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">3 min</span><span class="stat-label">to complete</span></div>
+        <div class="stat"><span class="stat-num">15+</span><span class="stat-label">products covered</span></div>
+        <div class="stat"><span class="stat-num">100%</span><span class="stat-label">no obligation</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-stack">
+        <div class="hcard"><div class="hcard-label">Protection</div><div class="hcard-name">PRULove for Life</div><div class="hcard-desc">Limited-pay whole life with dividends</div><span class="hcard-tag">Traditional</span></div>
+        <div class="hcard"><div class="hcard-label">Investment-Linked</div><div class="hcard-name">PRULink Assurance Account+</div><div class="hcard-desc">Insurance + investment up to age 100</div><span class="hcard-tag">VUL</span></div>
+        <div class="hcard"><div class="hcard-label">Accident Cover</div><div class="hcard-name">PRU Personal Accident</div><div class="hcard-desc">From ₱208/yr — 5 packages available</div><span class="hcard-tag">Yearly Renewable</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="page">
+  <div id="finder">
+    <div class="finder-header">
+      <div>
+        <div class="finder-title">Insurance Plan Finder</div>
+        <div class="finder-sub">Powered by Pru Life UK product portfolio</div>
+      </div>
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="rgba(255,255,255,.3)" stroke-width="1"/><path d="M9 14.5L12.5 18L19 11" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="finder-body">
+      <div id="finder-content"></div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <section class="section">
+    <div class="section-label">Why Pru Life UK</div>
+    <div class="section-title">Protection built on 25+ years of trust</div>
+    <p class="section-sub">One of the leading life insurance companies in the Philippines, backed by Prudential plc — a global financial institution.</p>
+    <div class="trust-grid">
+      <div class="trust-card"><div class="trust-icon">🛡️</div><div class="trust-title">Comprehensive protection</div><div class="trust-desc">From basic accident coverage to full critical illness and retirement planning.</div></div>
+      <div class="trust-card"><div class="trust-icon">📊</div><div class="trust-title">Investment-linked options</div><div class="trust-desc">VUL plans with access to Eastspring-managed peso and dollar funds.</div></div>
+      <div class="trust-card"><div class="trust-icon">👨‍👩‍👧</div><div class="trust-title">Built for Filipino families</div><div class="trust-desc">Products designed for breadwinners, OFWs, young professionals, and parents.</div></div>
+      <div class="trust-card"><div class="trust-icon">📞</div><div class="trust-title">Dedicated advisor support</div><div class="trust-desc">A licensed financial advisor will contact you to walk through your plan in detail.</div></div>
+    </div>
+  </section>
+</div>
+
+<div class="page">
+  <section class="section" style="padding-top:0">
+    <div class="section-label">Common questions</div>
+    <div class="section-title">What you need to know</div>
+    <div class="faq">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What is the difference between traditional insurance and VUL? <span class="icon">+</span></div>
+        <div class="faq-a">Traditional insurance (e.g. term, whole life, endowment) provides guaranteed benefits — coverage amount and terms are fixed. VUL (Variable Unit-Linked) combines life insurance with an investment fund. The fund value can grow over time but is subject to market performance and is not guaranteed. Both are valid — the right choice depends on your goals and risk tolerance.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What is the correct order of financial priorities? <span class="icon">+</span></div>
+        <div class="faq-a">Following the foundational framework: (1) Emergency Fund — 3 to 6 months of living expenses in a liquid account; (2) Protection Insurance — life, accident, health; (3) Savings and Investments — education fund, retirement, wealth building. Insurance protects what you've built. Investment grows what you save. Neither replaces the other.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How soon can I get covered after applying? <span class="icon">+</span></div>
+        <div class="faq-a">Coverage can begin as early as the day your application is approved, subject to underwriting. Your advisor will guide you through requirements. Some products like PRU Personal Accident and PRUWealth 10 have simplified or guaranteed issue offers with minimal medical requirements.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What happens if I miss a premium payment? <span class="icon">+</span></div>
+        <div class="faq-a">Most plans have a grace period (typically 31 days) for late payments. VUL plans can also use the accumulated fund value to cover charges during temporary financial difficulty, subject to maintaining a minimum fund value. Traditional plans have non-forfeiture options such as automatic premium loans or reduced paid-up values.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Can I attach riders to my policy? <span class="icon">+</span></div>
+        <div class="faq-a">Yes — most PRULink VUL products and traditional plans accept optional riders including: Critical Illness (Life Care Benefit), Hospitalization (Hospital Income, ICU, Surgical Expense Reimbursement), Accident (ADD, ATPD, PA riders), and Waiver of Premium. Riders increase the total premium but significantly expand your coverage.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">PRULife UK Philippines</div>
+      <div>Pru Life Insurance Corporation of U.K.</div>
+      <div>Registered life insurance company in the Philippines</div>
+    </div>
+    <div style="max-width:640px;">
+      This tool is for general information and educational purposes only. Product details are based on official Pru Life UK product primers and are subject to change. Recommendations are indicative and are not a substitute for a formal Financial Needs Analysis (FNA) conducted by a licensed Pru Life UK financial advisor. All insurance products are subject to full underwriting, eligibility requirements, and policy terms and conditions. Investment returns on VUL products are not guaranteed and are subject to market risks. Premium amounts shown are indicative — actual premiums depend on age, sum assured, payment mode, and underwriting class.
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   GOOGLE SHEETS CONFIG
+   Replace SHEET_ID and SHEET_NAME with your values.
+   The Apps Script Web App URL goes in SCRIPT_URL.
+══════════════════════════════════════════════════════ */
+const GS_CONFIG = {
+  SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyAO80tdhrWqndZ-b_mWFMWrwsW0CvHMsKyAKXMdt3SgtmZj2ESsyxTspPrM3V3tuOy/exec',
+  // Instructions: Go to Google Sheets → Extensions → Apps Script
+  // Paste the Apps Script code from the comment block at bottom of this file
+  // Deploy as Web App → Execute as Me → Anyone → Copy URL here
+};
+
+/* ══════════════════════════════════════════════════════
+   PRODUCT DATABASE (sourced from official primers)
+══════════════════════════════════════════════════════ */
+const PRODUCT_DB = {
+
+  /* ─── PRULink Assurance Account Plus (PAA+) ─── */
+  PAA_PLUS: {
+    name: 'PRULink Assurance Account Plus',
+    shortName: 'PAA Plus',
+    type: 'Investment-Linked (VUL)',
+    productType: 'Regular-pay unit-linked',
+    payTerm: 'Payable up to age 100 (regular pay)',
+    benefitTerm: 'Up to age 100',
+    issueAge: '0 (7 days) to 70 years old',
+    currency: 'Philippine Peso and/or US Dollar',
+    minPremium: '₱30,000/yr (standard) | ₱20,000/yr (low premium) | USD 600/yr (dollar)',
+    keyBenefits: [
+      'Death benefit: Sum Assured + Fund Value + 125% of top-ups',
+      'Maturity benefit at age 100: Sum Assured + Fund Value',
+      'Accelerated TPD Benefit included (up to age 70)',
+      'Loyalty Bonus at end of policy Year 11 onwards',
+      'Access to 12+ PRULink peso and dollar investment funds',
+    ],
+    optionalRiders: ['Life Care Benefit (LCB) — Critical Illness', 'Hospital Income (HI)', 'Intensive Care Unit (ICU)', 'Long-Term Hospitalization (LTH)', 'Surgical Expense Reimbursement (SER)', 'Accidental Death & Disablement (ADD)', 'Waiver of Premium (WPTPD, LCW, PW)', 'Personal Accident (PA) riders'],
+    fundsAvailable: ['PRULink Equity Fund', 'PRULink Growth Fund', 'PRULink Managed Fund', 'PRULink Proactive Fund', 'PRULink Bond Fund', 'PRULink Money Market Fund', 'Dollar funds available'],
+    idealFor: 'Young professionals and breadwinners who want maximum protection plus investment growth with flexible rider customization.',
+    tags: ['VUL', 'Regular pay', 'Rider-customizable', 'Fund growth', 'Peso + Dollar'],
+  },
+
+  /* ─── PRULink Elite Protector Series ─── */
+  ELITE_PROTECTOR: {
+    name: 'PRULink Elite Protector Series',
+    shortName: 'Elite Protector',
+    type: 'Investment-Linked (VUL)',
+    productType: 'Limited-pay unit-linked',
+    payTerm: '5, 7, 10, or 15 years',
+    benefitTerm: 'Up to age 100',
+    issueAge: '0 (7 days) to 70 years old',
+    currency: 'Philippine Peso and/or US Dollar',
+    minPremium: 'Higher minimum entry premium (limited pay); consult advisor for illustration',
+    keyBenefits: [
+      'Death benefit: Sum Assured + Fund Value + 125% of top-ups',
+      'Maturity at age 100: Sum Assured + Fund Value',
+      'Higher fund allocation and lower upfront charges vs. regular-pay VUL',
+      'Accelerated TPD Benefit (min SA: ₱250,000 or USD 1,200)',
+      'Loyalty Bonus starting end of Year 11',
+      'Optional PA riders: Dangerous Sports Coverage, Double Indemnity, Accidental Medical Reimbursement',
+    ],
+    optionalRiders: ['Life Care Benefit (LCB)', 'Hospital Income (HI)', 'ICU', 'LTH', 'SER', 'ADD', 'PA Standard, PA Executive, PA Power, PA Junior', 'Waiver of Premium riders'],
+    fundsAvailable: ['PRULink Equity Fund', 'PRULink Growth Fund', 'PRULink Managed Fund', 'PRULink Bond Fund', 'Dollar funds'],
+    idealFor: 'Individuals with medium-to-long-term goals (education fund, retirement) who can commit to a limited pay period for higher fund allocation efficiency.',
+    tags: ['VUL', 'Limited pay', 'Higher fund allocation', 'Medium-long term', 'Peso + Dollar'],
+  },
+
+  /* ─── PRULink Exact Protector ─── */
+  EXACT_PROTECTOR: {
+    name: 'PRULink Exact Protector',
+    shortName: 'Exact Protector',
+    type: 'Investment-Linked (VUL)',
+    productType: 'Limited-pay unit-linked',
+    payTerm: '5, 7, 10, or 15 years (includes Low Premium option at 10 and 15-pay)',
+    benefitTerm: 'Up to age 100',
+    issueAge: '0 (7 days) to 70 years old',
+    currency: 'Philippine Peso and/or US Dollar',
+    minPremium: '5/7-pay: ₱250,000 SA min | 10/15-pay Regular: ₱225,000 SA | 10/15-pay Low: ₱110,000 SA',
+    keyBenefits: [
+      'Death benefit: Sum Assured + Fund Value + 125% of top-ups',
+      'Maturity at age 100: Sum Assured + Fund Value',
+      'Low Premium option for 10 and 15-pay provides more affordable entry',
+      'Accelerated TPD Benefit included',
+      'Wide range of customizable optional riders',
+    ],
+    optionalRiders: ['Life Care Benefit (LCB)', 'Hospital Income (HI)', 'ICU', 'LTH', 'SER', 'ADD', 'PA riders (Standard, Executive, Power, Junior)', 'Waiver of Premium riders'],
+    fundsAvailable: ['PRULink Equity Fund', 'PRULink Growth Fund', 'PRULink Managed Fund', 'PRULink Bond Fund', 'Dollar funds'],
+    idealFor: 'Clients who want a customizable VUL with flexible payment terms and the option to choose a lower premium entry via the Low Premium product.',
+    tags: ['VUL', 'Limited pay', 'Low premium option', 'Customizable', 'Peso + Dollar'],
+  },
+
+  /* ─── PRULink Investor Account Plus ─── */
+  INVESTOR_ACCOUNT: {
+    name: 'PRULink Investor Account Plus',
+    shortName: 'Investor Account Plus',
+    type: 'Investment-Linked (VUL)',
+    productType: 'Single-pay unit-linked',
+    payTerm: 'Single pay (one-time)',
+    benefitTerm: 'Up to age 100',
+    issueAge: '0 (7 days) to 70 years old',
+    currency: 'Philippine Peso and US Dollar',
+    minPremium: 'Band 1: ₱100,000 (Peso) / USD 2,500 | Band 2: ₱200,000 (Peso) / USD 6,000',
+    keyBenefits: [
+      '97% premium allocation directly to investment fund',
+      'Guaranteed Issue Offer (GIO) — no medical exam for the life insured',
+      'Death benefit: higher of 125% of single premium or Fund Value (full benefit after 2 yrs)',
+      'Fund value at maturity (age 100)',
+      '4 free fund switches per year',
+      'Partial withdrawal and top-up facility available',
+    ],
+    optionalRiders: ['Additional Term (AT)', 'PA Standard, Executive, Power, Junior', 'Non-accelerated TPD Benefit'],
+    fundsAvailable: ['PRULink Equity Fund', 'PRULink Growth Fund', 'PRULink Managed Fund', 'PRULink Proactive Fund', 'PRULink Bond Fund', 'PRULink Money Market Fund', 'Dollar Bond, Asian funds, Global Navigator Fund'],
+    idealFor: 'Individuals with lump-sum capital to invest who want maximum fund allocation and no medical underwriting, with life insurance protection.',
+    tags: ['VUL', 'Single pay', 'GIO', '97% fund allocation', 'Top-up anytime'],
+  },
+
+  /* ─── PRUMillion Flex ─── */
+  MILLION_FLEX: {
+    name: 'PRUMillion Flex',
+    shortName: 'PRUMillion Flex',
+    type: 'Investment-Linked (VUL)',
+    productType: 'Limited-pay (2-year), investment-linked',
+    payTerm: '2 years (monthly, quarterly, semi-annual, or annual modes)',
+    benefitTerm: 'Up to age 85',
+    issueAge: '0 (7 days) to 70 years old',
+    currency: 'Philippine Peso',
+    minPremium: 'Min ₱250,000/year for 2 years (total min ₱500,000). Simplified Issue Offer (SIO).',
+    keyBenefits: [
+      'Sum Assured = 500% of annual premium',
+      'Death benefit: higher of Sum Assured or 105% of Fund Value',
+      'Accelerated TPD Benefit included',
+      'High fund allocation directly to investment component',
+      'Access to diverse range of professionally managed funds',
+      'Simplified Issue Offer (SIO) — lighter underwriting',
+    ],
+    optionalRiders: ['Consult advisor for available riders'],
+    fundsAvailable: ['PRULink Equity Fund', 'PRULink Growth Fund', 'PRULink Managed Fund', 'PRULink Bond Fund', 'And others'],
+    idealFor: 'Affluent clients who want to pay premiums for only 2 years, receive substantial protection (500% SA), and maximize investment potential.',
+    tags: ['VUL', '2-pay', 'Affluent', 'SIO', '500% SA'],
+  },
+
+  /* ─── PRUMillion Protect ─── */
+  MILLION_PROTECT: {
+    name: 'PRUMillion Protect',
+    shortName: 'PRUMillion Protect',
+    type: 'Investment-Linked (VUL)',
+    productType: 'Limited-pay (2-year), investment-linked',
+    payTerm: '2 years (monthly, quarterly, semi-annual, or annual modes)',
+    benefitTerm: 'Up to age 85',
+    issueAge: '0 (7 days) to 70 years old',
+    currency: 'Philippine Peso',
+    minPremium: 'Min ₱250,000/year for 2 years. Simplified Issue Offer (SIO).',
+    keyBenefits: [
+      'Sum Assured = 500% of base annual premium',
+      'Death benefit: higher of Sum Assured or 105% of Fund Value',
+      'Accelerated TPD Benefit included',
+      'Loyalty Bonus every 5 years starting Year 10 (based on % of average fund value)',
+      'High fund allocation to maximize investment growth',
+      'Flexible payment modes for the 2-year term',
+    ],
+    optionalRiders: ['Consult advisor for available riders'],
+    fundsAvailable: ['PRULink Equity Fund', 'PRULink Growth Fund', 'PRULink Managed Fund', 'PRULink Bond Fund', 'And others'],
+    idealFor: 'High Net Worth clients who want maximum investment exposure with substantial protection, loyalty bonus, and only a 2-year payment commitment.',
+    tags: ['VUL', '2-pay', 'Loyalty bonus', 'HNW', '500% SA'],
+  },
+
+  /* ─── PRUMillionaire ─── */
+  MILLIONAIRE: {
+    name: 'PRUMillionaire',
+    shortName: 'PRUMillionaire',
+    type: 'Investment-Linked (VUL)',
+    productType: 'Single-pay unit-linked',
+    payTerm: 'Single pay',
+    benefitTerm: 'Up to age 100',
+    issueAge: '0 (7 days) to 70 years old',
+    currency: 'Philippine Peso and US Dollar',
+    minPremium: 'Min ₱1,000,000 (Peso) / USD 20,000. Guaranteed Issue Offer (GIO). No medical required.',
+    keyBenefits: [
+      '99.5% premium allocation (industry-leading, only 0.5% initial charge)',
+      'Death benefit: higher of 125% single premium or Fund Value',
+      'GIO — no medical underwriting',
+      '4 free fund switches per year',
+      'Partial withdrawals and top-ups allowed anytime',
+      'Access to full range of peso and dollar PRULink funds',
+    ],
+    optionalRiders: ['None (investment-focused product)'],
+    fundsAvailable: ['Full suite: Equity, Growth, Managed, Proactive, Bond, Money Market, Cash Flow, Equity Index Tracker, Global Equity Navigator, and multiple Dollar funds'],
+    idealFor: 'High Net Worth individuals who want maximum investment allocation with minimum charges, no medical requirement, and broad fund diversification.',
+    tags: ['VUL', 'Single pay', 'GIO', '99.5% allocation', 'HNW', 'No medical'],
+  },
+
+  /* ─── PRULove for Life ─── */
+  LOVE_FOR_LIFE: {
+    name: 'PRULove for Life',
+    shortName: 'PRULove for Life',
+    type: 'Traditional',
+    productType: 'Limited-pay whole life participating',
+    payTerm: '5, 10, 15, or 20 years',
+    benefitTerm: 'Up to age 100 (lifetime protection)',
+    issueAge: '5/10-pay: age 1–65 | 15/20-pay: contact advisor for specific limits',
+    currency: 'Philippine Peso',
+    minPremium: 'Depends on sum assured and payment term; consult advisor',
+    keyBenefits: [
+      'Guaranteed lifetime protection coverage up to age 100',
+      'Death benefit: Sum Assured + accumulated dividends',
+      'Living benefits: withdrawable values from cash value and non-guaranteed dividends',
+      'Premiums payable for limited term only (5, 10, 15, or 20 years)',
+      'Annual non-guaranteed dividends from the 2nd policy year',
+      'Policy can be customized with supplementary benefits and riders',
+    ],
+    optionalRiders: ['Critical Illness', 'Hospitalization riders', 'Accident riders', 'Waiver of Premium'],
+    fundsAvailable: ['N/A — Traditional product'],
+    idealFor: 'Individuals who want permanent lifetime protection with limited premium payment periods and potential dividend income.',
+    tags: ['Whole life', 'Limited pay', 'Dividends', 'Cash value', 'Lifetime coverage'],
+  },
+
+  /* ─── PRULifetime Income ─── */
+  LIFETIME_INCOME: {
+    name: 'PRULifetime Income',
+    shortName: 'PRULifetime Income',
+    type: 'Traditional',
+    productType: 'Limited-pay whole life participating',
+    payTerm: '5 or 10 years',
+    benefitTerm: 'Up to age 100',
+    issueAge: '0 (7 days) to 60 years old (policyowner min 18)',
+    currency: 'Philippine Peso',
+    minPremium: 'Depends on sum assured; consult advisor',
+    keyBenefits: [
+      'Death benefit: 200% of Sum Assured + accumulated dividends + accumulated payouts (less outstanding loans)',
+      'Guaranteed cash payouts starting at end of Year 6, every policy anniversary thereafter',
+      'Non-guaranteed annual dividends from Year 2',
+      'Lifetime protection with income stream for education, retirement, or emergencies',
+      'Policy loan available (up to max loanable amount of cash value)',
+    ],
+    optionalRiders: ['Critical Illness', 'Hospital Income', 'Accident riders', 'Waiver of Premium'],
+    fundsAvailable: ['N/A — Traditional product'],
+    idealFor: 'Breadwinners and executives who want guaranteed periodic payouts starting Year 6 plus a 200% death benefit and lifetime coverage.',
+    tags: ['Whole life', 'Guaranteed payouts', '200% death benefit', 'Income stream', '5 or 10-pay'],
+  },
+
+  /* ─── PRUSteady Income ─── */
+  STEADY_INCOME: {
+    name: 'PRUSteady Income',
+    shortName: 'PRUSteady Income',
+    type: 'Traditional',
+    productType: 'Limited-pay 20-year non-participating endowment',
+    payTerm: '5 or 10 years',
+    benefitTerm: '20 years (maturity at end of Year 20)',
+    issueAge: '0 (7 days) to 60 years old (policyowner min 18)',
+    currency: 'Philippine Peso',
+    minPremium: 'Depends on sum assured; consult advisor',
+    keyBenefits: [
+      'Death benefit: 200% of Sum Assured + accumulated payouts (less outstanding loans)',
+      'Guaranteed cash payouts: 10% of Sum Assured starting Year 11, every anniversary until maturity',
+      'Guaranteed maturity benefit at end of Year 20',
+      'Non-participating (no dividends) — fully guaranteed plan',
+      'Riders can be attached for expanded coverage',
+    ],
+    optionalRiders: ['Critical Illness', 'Hospital Income', 'Accident riders', 'Payor Waiver', 'Waiver of Premium'],
+    fundsAvailable: ['N/A — Traditional product'],
+    idealFor: 'Individuals planning for education, retirement, or business capital needs within a defined 20-year window, with guaranteed income starting Year 11.',
+    tags: ['Endowment', '20-year', 'Guaranteed payouts', '200% death benefit', '5 or 10-pay'],
+  },
+
+  /* ─── PRULife Your Term ─── */
+  YOUR_TERM: {
+    name: 'PRULife Your Term',
+    shortName: 'Your Term',
+    type: 'Traditional',
+    productType: '1-year renewable and convertible term',
+    payTerm: 'Yearly renewable up to age 89 (terminates age 90)',
+    benefitTerm: '1-year per term (auto-renewed)',
+    issueAge: '0 to 79 years old',
+    currency: 'Philippine Peso',
+    minPremium: '₱8,000/yr (ages 0–39) | ₱15,000/yr (ages 40–59) | ₱35,000/yr (ages 60–79) + ₱400 policy fee',
+    keyBenefits: [
+      'Death benefit equal to Sum Assured — maximum income replacement at lowest cost',
+      'Automatically renewable each year before age 90',
+      'Convertible to permanent plan (whole life, endowment, VUL) from Year 2 without medical proof',
+      'Only term product in market where a Variable Life (VL) Rider can be attached',
+      'VL Rider transforms it into a hybrid product with investment component',
+      'Full suite of health and accident riders available',
+    ],
+    optionalRiders: ['ADD (Accidental Death & Disablement)', 'ATPD', 'Life Care Benefit (LCB)', 'Hospital Income (HI)', 'ICU', 'LTH', 'SER', 'Variable Life (VL) Rider', 'Waiver of Premium riders', 'Personal Accident (PA)'],
+    fundsAvailable: ['N/A for base (VL Rider gives investment access)'],
+    idealFor: 'Budget-conscious individuals needing maximum life coverage for income replacement, mortgage protection, or estate taxes — especially those starting young.',
+    tags: ['Term', 'Yearly renewable', 'Convertible', 'VL Rider option', 'Low cost'],
+  },
+
+  /* ─── PRUHealth FamLove ─── */
+  FAM_LOVE: {
+    name: 'PRUHealth FamLove',
+    shortName: 'FamLove',
+    type: 'Traditional',
+    productType: 'Yearly renewable term insurance — critical illness plan',
+    payTerm: 'Yearly renewable up to age 85 of Main Life Insured',
+    benefitTerm: 'Up to age 85 (Main LI)',
+    issueAge: 'Main LI & Spouse: 20–60 | Children: 15 days–21 yrs | Parents: 45–70',
+    currency: 'Philippine Peso',
+    minPremium: 'Yearly renewable premiums increase with age; consult advisor for current rates',
+    keyBenefits: [
+      'Moderate CI Benefit: 50% of Sum Assured on diagnosis of covered Moderate conditions',
+      'Severe CI Benefit: 100% of Sum Assured on diagnosis of covered Severe conditions',
+      'Death benefit: 100% of Sum Assured (less any CI claims paid)',
+      'Family Extension Benefit (FEB): share CI coverage to spouse (50% SA), children (50% SA), or parents (25% SA)',
+      '5 plan options: mySelf, myPartner, myChild, myFamily, myParent',
+      'Covers modern Filipino family structures (same-sex and common-law partners)',
+    ],
+    optionalRiders: ['Family Extension Benefit (FEB) — shareable CI to family members'],
+    fundsAvailable: ['N/A — Traditional'],
+    idealFor: 'Individuals who want affordable critical illness protection for themselves and their entire family under a single, shareable policy.',
+    tags: ['Critical illness', 'Family plan', 'Yearly renewable', 'Moderate + Severe CI', 'FEB rider'],
+  },
+
+  /* ─── PRUHealth Prime ─── */
+  HEALTH_PRIME: {
+    name: 'PRUHealth Prime',
+    shortName: 'PRUHealth Prime',
+    type: 'Investment-Linked (VUL)',
+    productType: '20-year pay investment-linked health plan',
+    payTerm: '20 years to pay',
+    benefitTerm: 'Up to age 85',
+    issueAge: '0 (30 days) to 60 years old',
+    currency: 'Philippine Peso',
+    minPremium: 'Consult advisor for current rates (depends on age, SA, riders)',
+    keyBenefits: [
+      'Death benefit: Sum Assured + Fund Value + 125% top-ups (less Early Stage Cancer claims)',
+      'Maturity benefit at age 85: Sum Assured + Fund Value',
+      'Early Stage Cancer Benefit: advances 50% of SA on early cancer diagnosis (capped at ₱3.75M adult / ₱1.5M juvenile)',
+      'Late Stage Cancer Benefit: pays remaining SA balance on late stage diagnosis',
+      'Built-in hospital and critical illness coverage via riders',
+      'Investment component grows alongside health protection',
+    ],
+    optionalRiders: ['Hospital Income (HI)', 'ICU', 'LTH', 'SER', 'Additional cancer coverage'],
+    fundsAvailable: ['PRULink Equity Fund', 'PRULink Bond Fund', 'PRULink Managed Fund', 'And others'],
+    idealFor: 'Individuals who want comprehensive cancer and health coverage combined with an investment component — particularly suitable for those with family history of cancer.',
+    tags: ['VUL health', 'Cancer coverage', 'Early stage benefit', '20-pay', 'Up to age 85'],
+  },
+
+  /* ─── PRUWealth 10 ─── */
+  WEALTH_10: {
+    name: 'PRUWealth 10',
+    shortName: 'PRUWealth 10',
+    type: 'Traditional',
+    productType: 'Single-pay 10-year endowment with guaranteed annual payouts',
+    payTerm: 'Single pay (one-time)',
+    benefitTerm: '10 years',
+    issueAge: '7 days to 70 years old (policyowner min 18)',
+    currency: 'Philippine Peso',
+    minPremium: 'Consult advisor for minimum single premium (GIO subject to ₱500M limit)',
+    keyBenefits: [
+      'Guaranteed annual payout: 5% of Single Premium every year from Year 1 to Year 10',
+      'Total guaranteed income: 50% of single premium over 10 years',
+      'Death benefit: 110% of Single Premium (regardless of cause and date)',
+      'Full Single Premium returned at maturity (Year 10)',
+      'Net effective return: premium intact + 50% additional income + insurance coverage',
+      'Guaranteed Insurability Offer (GIO) — simplified underwriting',
+    ],
+    optionalRiders: ['No riders available (standalone endowment product)'],
+    fundsAvailable: ['N/A — Traditional product'],
+    idealFor: 'Conservative high-net-worth and affluent individuals seeking guaranteed returns better than bank deposits, with capital preservation and life insurance coverage.',
+    tags: ['Single pay', 'Guaranteed 5%/yr', '10-year', 'Capital preserved', 'GIO'],
+  },
+
+  /* ─── Personal Accident Standard ─── */
+  PA_STANDARD: {
+    name: 'PRU Personal Accident — Standard',
+    shortName: 'PA Standard',
+    type: 'Non-life / Accident',
+    productType: 'Packaged non-participating yearly renewable accident plan',
+    payTerm: 'Yearly renewable (premium term up to age 72, benefit term up to age 73)',
+    benefitTerm: 'Up to age 73',
+    issueAge: '18 to 65 years old',
+    currency: 'Philippine Peso',
+    minPremium: 'Package 1 (basic): ₱208.55/yr (Class 1) | Package 5 (full): ₱10,737.32/yr (Class 4 w/ MR+HI)',
+    packages: {
+      headers: ['Package', 'AD&D', 'M&A', 'BB', 'TPD', 'MR (opt)', 'HI (opt)'],
+      rows: [
+        ['Pkg 1', '₱100,000', '₱50,000', '—', '₱100,000', '₱10,000', '₱500/day'],
+        ['Pkg 2', '₱300,000', '₱150,000', '₱5,000', '₱300,000', '₱30,000', '₱1,000/day'],
+        ['Pkg 3', '₱500,000', '₱250,000', '₱5,000', '₱500,000', '₱50,000', '₱2,000/day'],
+        ['Pkg 4', '₱1,000,000', '₱500,000', '₱5,000', '₱1,000,000', '₱100,000', '₱2,000/day'],
+        ['Pkg 5', '₱2,000,000', '₱1,000,000', '₱10,000', '₱2,000,000', '₱100,000', '₱2,000/day'],
+      ]
+    },
+    premiums: {
+      label: 'Basic annual premiums (no optional benefits)',
+      rows: [
+        ['', 'Pkg 1', 'Pkg 2', 'Pkg 3', 'Pkg 4', 'Pkg 5'],
+        ['Class 1', '₱208.55', '₱625.55', '₱1,042.60', '₱2,085.10', '₱4,170.10'],
+        ['Class 2', '₱271.55', '₱814.55', '₱1,357.60', '₱2,715.10', '₱5,430.10'],
+        ['Class 3', '₱308.55', '₱925.55', '₱1,542.60', '₱3,085.10', '₱6,170.10'],
+        ['Class 4', '₱391.55', '₱1,174.55', '₱1,957.60', '₱3,915.10', '₱7,830.10'],
+      ]
+    },
+    keyBenefits: [
+      'Core: Accidental Death & Dismemberment (AD&D) — schedule of losses up to 100% of SI',
+      'Murder & Assault (M&A): 50% of accidental death benefit, max ₱1M',
+      'Burial Benefit (BB): death due to natural causes (illness, stroke, etc.)',
+      'Renewal Bonus: SA increases 5% per year up to 5 years (based on first ₱1M)',
+      'TPD: 100% SA if unable to work due to accident (after 6 months disability)',
+      'Optional: Medical Reimbursement (MR) — medical expenses within 30 days of accident',
+      'Optional: Hospital Income (HI) — daily benefit for confinement due to accident (max 30 days/year)',
+    ],
+    optionalRiders: ['Medical Reimbursement (MR)', 'Hospital Income (HI)'],
+    occupationalClasses: 'Class 1 (office/non-hazardous) | Class 2 (limited manual) | Class 3 (light machinery) | Class 4 (heavier risk)',
+    idealFor: 'Any working Filipino needing affordable accident protection. Package 1 is entry-level; Package 5 is maximum coverage.',
+    tags: ['Accident', 'Yearly renewable', '5 packages', 'TPD', 'From ₱208/yr'],
+  },
+
+  /* ─── Personal Accident Executive ─── */
+  PA_EXECUTIVE: {
+    name: 'PRU Personal Accident — Executive',
+    shortName: 'PA Executive',
+    type: 'Non-life / Accident',
+    productType: 'Packaged accident plan for business executives and frequent travelers',
+    payTerm: 'Yearly renewable (up to age 72 premium; up to age 73 benefit)',
+    benefitTerm: 'Up to age 73',
+    issueAge: '18 to 65 years old',
+    currency: 'Philippine Peso',
+    minPremium: 'Package 1 (basic): ₱2,235.10/yr (Class 1) | Package 2 (full w/ all options): ₱8,244.82/yr (Class 2)',
+    packages: {
+      headers: ['Package', 'AD&D', 'M&A', 'DI', 'BB', 'TPD', 'MR (opt)', 'HI (opt)'],
+      rows: [
+        ['Pkg 1', '₱1,000,000', '₱500,000', '₱1,000,000', '₱10,000', '₱1,000,000', '₱100,000', '₱2,000/day'],
+        ['Pkg 2', '₱2,000,000', '₱1,000,000', '₱2,000,000', '₱10,000', '₱2,000,000', '₱100,000', '₱2,000/day'],
+      ]
+    },
+    premiums: {
+      label: 'Basic annual premiums (no optional benefits) — Class 1 & 2 only',
+      rows: [
+        ['', 'Pkg 1', 'Pkg 2'],
+        ['Class 1', '₱2,235.10', '₱4,470.10'],
+        ['Class 2', '₱2,865.10', '₱5,730.10'],
+      ]
+    },
+    keyBenefits: [
+      'Includes Double Indemnity (DI): pays double SA if death occurs during business travel',
+      'Higher sum assured (₱1M–₱2M) appropriate for executives',
+      'Murder & Assault, Burial Benefit, Renewal Bonus, TPD included',
+      'Available for Class 1 and Class 2 only (office/non-hazardous occupations)',
+      'Optional: Medical Reimbursement (MR) and Hospital Income (HI)',
+    ],
+    optionalRiders: ['Medical Reimbursement (MR)', 'Hospital Income (HI)'],
+    idealFor: 'Business executives, managers, and frequent travelers (Class 1–2) who need higher accident coverage with double indemnity during business trips.',
+    tags: ['Accident', 'Executive', 'Double indemnity', 'Travel protection', '₱1M–₱2M SA'],
+  },
+
+  /* ─── Personal Accident Power (Youth) ─── */
+  PA_POWER: {
+    name: 'PRU Personal Accident — Power (Youth)',
+    shortName: 'PA Power',
+    type: 'Non-life / Accident',
+    productType: 'Packaged accident plan for active young adults',
+    payTerm: 'Yearly renewable (DSC up to age 25; core up to age 72)',
+    benefitTerm: 'Core: up to age 73 | DSC: up to age 26',
+    issueAge: '15 to 25 years old',
+    currency: 'Philippine Peso',
+    minPremium: 'Package 1 (basic): ₱212.30/yr | Package 4 (all benefits): ₱2,727.16/yr',
+    packages: {
+      headers: ['Package', 'AD&D', 'M&A', 'DSC', 'TPD', 'HI (incl)', 'MR (opt)'],
+      rows: [
+        ['Pkg 1', '₱100,000', '₱50,000', '₱25,000', '₱100,000', '₱500/day', '₱10,000'],
+        ['Pkg 2', '₱300,000', '₱150,000', '₱75,000', '₱300,000', '₱500/day', '—'],
+        ['Pkg 3', '₱500,000', '₱250,000', '₱125,000', '₱500,000', '₱500/day', '—'],
+        ['Pkg 4', '₱1,000,000', '₱500,000', '₱250,000', '₱1,000,000', '₱1,000/day', '₱20,000'],
+      ]
+    },
+    keyBenefits: [
+      'Dangerous Sports Coverage (DSC): covers extreme sports and dangerous activities',
+      'HI (Hospital Income) included in all packages',
+      'Class 1 only (single premium rate for all applicants)',
+      'Designed for youth 15–25 who engage in active and extreme sports',
+      'Package 4 provides ₱1M coverage with full benefits',
+    ],
+    optionalRiders: ['Medical Reimbursement (MR)'],
+    idealFor: 'Young adults aged 15–25 who are active in sports, extreme activities, or outdoor adventures and want affordable accident coverage.',
+    tags: ['Accident', 'Youth', 'Extreme sports', 'DSC', '15–25 years old'],
+  },
+
+  /* ─── Personal Accident Junior (Children) ─── */
+  PA_JUNIOR: {
+    name: 'PRU Personal Accident — Junior (Children)',
+    shortName: 'PA Junior',
+    type: 'Non-life / Accident',
+    productType: 'Packaged accident plan for children with Field Trip Coverage',
+    payTerm: 'Yearly renewable (FTC up to age 22; core up to age 72)',
+    benefitTerm: 'Core: up to age 73 | FTC: up to age 23',
+    issueAge: '5 to 22 years old',
+    currency: 'Philippine Peso',
+    minPremium: 'Package 1 (basic): ₱48.95/yr | Package 4 (all benefits): ₱533.53/yr',
+    packages: {
+      headers: ['Package', 'AD&D', 'FTC', 'BB', 'HI (incl)', 'MR (opt)'],
+      rows: [
+        ['Pkg 1', '₱30,000', '₱30,000', '—', '₱250/day', '₱3,000'],
+        ['Pkg 2', '₱50,000', '₱50,000', '—', '₱250/day', '₱5,000'],
+        ['Pkg 3', '₱100,000', '₱100,000', '—', '₱500/day', '₱5,000'],
+        ['Pkg 4', '₱200,000', '₱200,000', '₱5,000', '₱500/day', '₱5,000'],
+      ]
+    },
+    keyBenefits: [
+      'Field Trip Coverage (FTC): covers accidents during school field trips',
+      'Hospital Income (HI) included in all packages',
+      'Very affordable — starts at less than ₱50/year (basic)',
+      'Class 1 only (single rate for all applicants)',
+      'Covers children from 5 to 22 years old (including college)',
+    ],
+    optionalRiders: ['Medical Reimbursement (MR)'],
+    idealFor: 'Parents who want to protect school-age children from accidents, especially during field trips and extracurricular activities.',
+    tags: ['Accident', 'Children', 'Field trip coverage', '5–22 years', 'From ₱49/yr'],
+  },
+};
+
+/* ══════════════════════════════════════════════════════
+   DECISION STEPS
+══════════════════════════════════════════════════════ */
+const STEP_LABELS = ['Goal', 'Plan type', 'Budget', 'Your details'];
+
+const STEPS = [
+  {
+    id: 'goal', stepNum: 1,
+    question: 'What is your primary financial goal?',
+    hint: 'Choose the one that matters most to you right now.',
+    choices: [
+      {id:'protection', icon:'🛡️', label:'Protect my income & family',      desc:'Life coverage if I pass away, get injured, or become disabled'},
+      {id:'health',     icon:'🏥', label:'Prepare for illness or hospital',  desc:'Critical illness, hospitalization, or cancer protection'},
+      {id:'retirement', icon:'🏠', label:'Build retirement or estate',       desc:'Guaranteed income stream or wealth accumulation for the future'},
+      {id:'education',  icon:'🎓', label:"Save for my child's education",   desc:'Dedicated education fund with built-in life insurance protection'},
+      {id:'investment', icon:'📈', label:'Grow and diversify my investments', desc:'Market-linked growth alongside life coverage'},
+      {id:'accident',   icon:'⚡', label:'Affordable accident protection',   desc:'Injury, dismemberment, TPD, death by accident — starts ₱208/yr'},
+    ]
+  },
+  {
+    id: 'type', stepNum: 2,
+    question: 'How do you prefer your plan to work?',
+    hint: 'This determines the product structure best suited to your need.',
+    choices: {
+      protection: [
+        {id:'lifetime', icon:'♾️', label:'Lifetime / whole-life coverage',   desc:'Permanent protection with potential cash value and dividends'},
+        {id:'term',     icon:'📅', label:'Pure term — maximum coverage',     desc:'Highest face amount at lowest cost; convertible to permanent plan'},
+        {id:'vul',      icon:'💡', label:'Insurance + investment (VUL)',     desc:'Protection with investment fund for long-term growth'},
+      ],
+      health: [
+        {id:'ci_family', icon:'👨‍👩‍👧', label:'Critical illness for whole family', desc:'Shareable CI coverage for spouse, children, or parents'},
+        {id:'cancer',    icon:'💊', label:'Cancer-focused health plan',         desc:'Early and late stage cancer benefits with investment component'},
+        {id:'vul_health',icon:'💡', label:'VUL-based comprehensive health',     desc:'Investment plan with health riders: CI, hospital, cancer'},
+      ],
+      retirement: [
+        {id:'guaranteed_income', icon:'📦', label:'Guaranteed income stream',       desc:'Fixed periodic payouts from the plan — no market exposure'},
+        {id:'endowment',         icon:'🏦', label:'Guaranteed maturity benefit',    desc:'Lump sum at maturity plus annual payouts'},
+        {id:'vul_retirement',    icon:'📊', label:'Market-linked retirement fund',  desc:'Higher potential growth through managed investment funds'},
+      ],
+      education: [
+        {id:'edu_guaranteed', icon:'📦', label:'Guaranteed education payout',     desc:'Fixed benefit at college entry, death protects the fund'},
+        {id:'edu_vul',        icon:'📊', label:'Investment-linked education fund', desc:'Market-linked fund growth to outpace rising tuition'},
+      ],
+      investment: [
+        {id:'single_invest',   icon:'💰', label:'Lump-sum, one-time investment',  desc:'Single premium VUL or endowment for maximum fund allocation'},
+        {id:'regular_invest',  icon:'📅', label:'Regular premium investment',      desc:'Systematic wealth building through regular premium VUL'},
+        {id:'guaranteed_end',  icon:'🏦', label:'Guaranteed endowment / fixed',   desc:'Guaranteed returns with capital preservation — no market risk'},
+      ],
+      accident: [
+        {id:'pa_standard_r',   icon:'👔', label:'Standard (personal or worker)', desc:'Packages 1–5, Classes 1–4; from office staff to skilled trades'},
+        {id:'pa_executive_r',  icon:'✈️', label:'Executive (business traveler)',  desc:'Double indemnity during travel; Class 1–2 only; ₱1M–₱2M SA'},
+        {id:'pa_power_r',      icon:'🏄', label:'Power — active youth (15–25)',  desc:'Dangerous sports coverage for young adults'},
+        {id:'pa_junior_r',     icon:'🎒', label:'Junior — children (5–22)',      desc:'Field trip coverage for school-age children'},
+      ],
+    }
+  },
+  {
+    id: 'budget', stepNum: 3,
+    question: 'What is your approximate monthly budget for insurance?',
+    hint: 'This helps us match you to the right package tier and payment structure.',
+    choices: [
+      {id:'b1', icon:'💚', amount:'Below ₱1,000/mo',   label:'Entry level',      desc:'Accident plans, basic term, or starter protection'},
+      {id:'b2', icon:'💛', amount:'₱1,000 – ₱3,000/mo', label:'Mid range',        desc:'Full accident packages, regular VUL, or traditional plans'},
+      {id:'b3', icon:'🔵', amount:'₱3,000 – ₱8,000/mo', label:'Comprehensive',   desc:'Higher coverage tiers, limited-pay VUL, comprehensive riders'},
+      {id:'b4', icon:'💎', amount:'₱8,000+/mo',          label:'Premium / HNW',   desc:'Executive plans, high SA, affluent VUL, endowment products'},
+    ]
+  }
+];
+
+/* ══════════════════════════════════════════════════════
+   PRODUCT ROUTING TABLE
+══════════════════════════════════════════════════════ */
+function routeProduct(goal, type, budget) {
+  const key = `${goal}|${type}|${budget}`;
+  const map = {
+    // PROTECTION – LIFETIME
+    'protection|lifetime|b1': {p:'LOVE_FOR_LIFE', note:'PRULove for Life 5 or 10-pay — lock in lifetime coverage while premiums are still manageable.'},
+    'protection|lifetime|b2': {p:'LOVE_FOR_LIFE', note:'PRULove for Life 10 or 15-pay — solid whole-life base with potential dividends.'},
+    'protection|lifetime|b3': {p:'LIFETIME_INCOME', note:'PRULifetime Income — whole-life with guaranteed payouts starting Year 6. Death benefit is 200% of SA.'},
+    'protection|lifetime|b4': {p:'LIFETIME_INCOME', note:'PRULifetime Income 5-pay — maximum whole-life coverage with early income stream. Ideal for estate planning.'},
+    // PROTECTION – TERM
+    'protection|term|b1': {p:'YOUR_TERM', note:'PRULife Your Term — most affordable Pru Life UK product. ₱8,000/yr for ages 0–39 for high face amount coverage.'},
+    'protection|term|b2': {p:'YOUR_TERM', note:'PRULife Your Term with riders — attach HI, ADD, or LCB to build a comprehensive package around this base.'},
+    'protection|term|b3': {p:'YOUR_TERM', note:'PRULife Your Term + Variable Life Rider — hybrid term + investment. Unique to Pru Life UK in the market.'},
+    'protection|term|b4': {p:'YOUR_TERM', note:'PRULife Your Term with full rider stack — or consider converting to PRULifetime Income for permanent coverage.'},
+    // PROTECTION – VUL
+    'protection|vul|b1': {p:'PAA_PLUS', note:'PRULink PAA Plus low-premium option (₱20,000/yr min). Start with base + ATPD and add riders as budget grows.'},
+    'protection|vul|b2': {p:'PAA_PLUS', note:'PRULink PAA Plus (₱30,000/yr standard). Attach HI, LCB, or ADD riders for comprehensive protection.'},
+    'protection|vul|b3': {p:'EXACT_PROTECTOR', note:'PRULink Exact Protector 10 or 15-pay — higher fund allocation than regular pay, with broad rider options.'},
+    'protection|vul|b4': {p:'ELITE_PROTECTOR', note:'PRULink Elite Protector Series 5 or 7-pay — premium limited-pay VUL with maximum fund efficiency.'},
+    // HEALTH – CI FAMILY
+    'health|ci_family|b1': {p:'FAM_LOVE', note:'PRUHealth FamLove "mySelf" — yearly renewable CI plan; cover yourself first, extend to family as budget allows.'},
+    'health|ci_family|b2': {p:'FAM_LOVE', note:'PRUHealth FamLove "myFamily" or "myChild" — share CI benefits with spouse and up to 2 children.'},
+    'health|ci_family|b3': {p:'FAM_LOVE', note:'PRUHealth FamLove "myFamily" full plan — moderate and severe CI coverage shared across the whole family.'},
+    'health|ci_family|b4': {p:'FAM_LOVE', note:'PRUHealth FamLove "myFamily" + VUL base — stack FamLove as a rider on a VUL for permanent CI protection.'},
+    // HEALTH – CANCER
+    'health|cancer|b1': {p:'HEALTH_PRIME', note:'PRUHealth Prime — 20-pay plan. Premiums are higher for full benefits; consult advisor for a scaled illustration.'},
+    'health|cancer|b2': {p:'HEALTH_PRIME', note:'PRUHealth Prime — the early stage cancer benefit (50% SA advance) is unique in the market. Ideal at this budget tier.'},
+    'health|cancer|b3': {p:'HEALTH_PRIME', note:'PRUHealth Prime with HI and ICU riders — comprehensive cancer + hospitalization plan with investment growth.'},
+    'health|cancer|b4': {p:'HEALTH_PRIME', note:'PRUHealth Prime maximum SA — full cancer and hospitalization protection with significant investment component.'},
+    // HEALTH – VUL HEALTH
+    'health|vul_health|b1': {p:'PAA_PLUS', note:'PRULink PAA Plus low-premium + LCB and HI riders — affordable entry into VUL-based health protection.'},
+    'health|vul_health|b2': {p:'PAA_PLUS', note:'PRULink PAA Plus standard + LCB + HI + ICU riders — balanced investment and health coverage.'},
+    'health|vul_health|b3': {p:'EXACT_PROTECTOR', note:'PRULink Exact Protector + full health rider stack: LCB, HI, ICU, LTH, SER — comprehensive package.'},
+    'health|vul_health|b4': {p:'ELITE_PROTECTOR', note:'PRULink Elite Protector + health riders — premium VUL with maximum health protection via riders.'},
+    // RETIREMENT – GUARANTEED INCOME
+    'retirement|guaranteed_income|b1': {p:'STEADY_INCOME', note:'PRUSteady Income 10-pay — guaranteed payouts starting Year 11. Best retirement starter for this budget.'},
+    'retirement|guaranteed_income|b2': {p:'STEADY_INCOME', note:'PRUSteady Income 5 or 10-pay — 200% death benefit + guaranteed 10% SA payout yearly from Year 11.'},
+    'retirement|guaranteed_income|b3': {p:'LIFETIME_INCOME', note:'PRULifetime Income 10-pay — guaranteed payouts from Year 6 for life, 200% death benefit.'},
+    'retirement|guaranteed_income|b4': {p:'LIFETIME_INCOME', note:'PRULifetime Income 5-pay — maximum income stream with estate conservation. Full retirement + legacy plan.'},
+    // RETIREMENT – ENDOWMENT
+    'retirement|endowment|b1': {p:'STEADY_INCOME', note:'PRUSteady Income — non-participating endowment with 100% guaranteed maturity benefit at Year 20.'},
+    'retirement|endowment|b2': {p:'STEADY_INCOME', note:'PRUSteady Income 10-pay — guaranteed maturity + 10% SA payouts yearly from Year 11 to 20.'},
+    'retirement|endowment|b3': {p:'WEALTH_10', note:'PRUWealth 10 — single-pay endowment; 5% guaranteed annual payout for 10 years, full premium returned.'},
+    'retirement|endowment|b4': {p:'WEALTH_10', note:'PRUWealth 10 — conservative high-net-worth product. Guaranteed 5%/yr income + 110% death benefit + capital returned.'},
+    // RETIREMENT – VUL
+    'retirement|vul_retirement|b1': {p:'PAA_PLUS', note:'PRULink PAA Plus low-premium — start a retirement VUL fund now. Switch to limited-pay later as income grows.'},
+    'retirement|vul_retirement|b2': {p:'PAA_PLUS', note:'PRULink PAA Plus standard — regular premium VUL for long-term retirement accumulation.'},
+    'retirement|vul_retirement|b3': {p:'EXACT_PROTECTOR', note:'PRULink Exact Protector 10 or 15-pay — limited pay builds fund faster with higher allocation.'},
+    'retirement|vul_retirement|b4': {p:'ELITE_PROTECTOR', note:'PRULink Elite Protector 5 or 7-pay — maximum fund allocation for retirement with strong insurance cover.'},
+    // EDUCATION – GUARANTEED
+    'education|edu_guaranteed|b1': {p:'STEADY_INCOME', note:'PRUSteady Income — guaranteed education fund. 200% death benefit ensures fund continues if parent passes.'},
+    'education|edu_guaranteed|b2': {p:'STEADY_INCOME', note:'PRUSteady Income 10-pay — guaranteed payout aligned to college entry. Add Payor Waiver rider for protection.'},
+    'education|edu_guaranteed|b3': {p:'LIFETIME_INCOME', note:'PRULifetime Income — income stream for education AND leaves a legacy. Dual-purpose plan.'},
+    'education|edu_guaranteed|b4': {p:'LIFETIME_INCOME', note:'PRULifetime Income 5-pay — premium education + estate plan. High SA with early income stream.'},
+    // EDUCATION – VUL
+    'education|edu_vul|b1': {p:'PAA_PLUS', note:'PRULink PAA Plus low-premium + Payor Waiver rider — premiums waived if parent dies; education fund continues.'},
+    'education|edu_vul|b2': {p:'PAA_PLUS', note:'PRULink PAA Plus + Payor Waiver — full VUL education plan with family protection built in.'},
+    'education|edu_vul|b3': {p:'EXACT_PROTECTOR', note:'PRULink Exact Protector + Payor Waiver — higher fund allocation ensures stronger growth for future tuition.'},
+    'education|edu_vul|b4': {p:'ELITE_PROTECTOR', note:'PRULink Elite Protector — maximum education VUL with estate coverage and high fund allocation.'},
+    // INVESTMENT – SINGLE
+    'investment|single_invest|b1': {p:'INVESTOR_ACCOUNT', note:'PRULink Investor Account Plus Band 1 (₱100,000 min single premium) — 97% allocation, GIO, no medical.'},
+    'investment|single_invest|b2': {p:'INVESTOR_ACCOUNT', note:'PRULink Investor Account Plus — single pay, GIO, 97% fund allocation. Add term rider for extra coverage.'},
+    'investment|single_invest|b3': {p:'INVESTOR_ACCOUNT', note:'PRULink Investor Account Plus Band 2 (₱200,000+) — broader fund access, dollar option available.'},
+    'investment|single_invest|b4': {p:'MILLIONAIRE', note:'PRUMillionaire — ₱1M+ single pay, 99.5% allocation (lowest charge), GIO, full range of global funds.'},
+    // INVESTMENT – REGULAR
+    'investment|regular_invest|b1': {p:'PAA_PLUS', note:'PRULink PAA Plus low-premium — ₱20,000/yr minimum. Start building your investment fund now.'},
+    'investment|regular_invest|b2': {p:'PAA_PLUS', note:'PRULink PAA Plus — balanced investment + insurance. Loyalty bonus from Year 11 adds extra fund value.'},
+    'investment|regular_invest|b3': {p:'EXACT_PROTECTOR', note:'PRULink Exact Protector — limited pay = higher fund allocation per peso. Better investment efficiency.'},
+    'investment|regular_invest|b4': {p:'ELITE_PROTECTOR', note:'PRULink Elite Protector — premium limited-pay VUL for maximum investment efficiency and portfolio growth.'},
+    // INVESTMENT – GUARANTEED
+    'investment|guaranteed_end|b1': {p:'STEADY_INCOME', note:'PRUSteady Income — guaranteed endowment with no market risk. 200% death benefit + guaranteed payouts.'},
+    'investment|guaranteed_end|b2': {p:'STEADY_INCOME', note:'PRUSteady Income 10-pay — solid guaranteed option at this budget; better than bank time deposit with insurance.'},
+    'investment|guaranteed_end|b3': {p:'WEALTH_10', note:'PRUWealth 10 — 5%/yr guaranteed, capital returned at Year 10. Outperforms most bank products with insurance.'},
+    'investment|guaranteed_end|b4': {p:'WEALTH_10', note:'PRUWealth 10 — premium endowment. Single pay, guaranteed income, capital preserved, GIO. Estate-quality.'},
+    // ACCIDENT
+    'accident|pa_standard_r|b1': {p:'PA_STANDARD', note:'PA Standard Package 1–2 (₱208–₱814/yr basic). Class 1–4 accepted. Optional MR and HI add-ons available.'},
+    'accident|pa_standard_r|b2': {p:'PA_STANDARD', note:'PA Standard Package 3 (₱500k SA, ₱1,042–₱1,957/yr basic). Add MR for reimbursement or HI for daily benefit.'},
+    'accident|pa_standard_r|b3': {p:'PA_STANDARD', note:'PA Standard Package 4 (₱1M SA) with MR + HI: ₱2,535–₱4,926/yr depending on occupational class.'},
+    'accident|pa_standard_r|b4': {p:'PA_STANDARD', note:'PA Standard Package 5 (₱2M SA, max coverage) with all options: ₱6,516–₱10,737/yr depending on class.'},
+    'accident|pa_executive_r|b1': {p:'PA_EXECUTIVE', note:'PA Executive Package 1 basic (₱2,235–₱2,865/yr) — ₱1M SA + Double Indemnity. Class 1–2 only.'},
+    'accident|pa_executive_r|b2': {p:'PA_EXECUTIVE', note:'PA Executive Package 1 with HI (₱2,685–₱3,483/yr) or with MR (₱4,131–₱4,761/yr).'},
+    'accident|pa_executive_r|b3': {p:'PA_EXECUTIVE', note:'PA Executive Package 2 basic (₱4,470–₱5,730/yr) — ₱2M SA + Double Indemnity + Renewal Bonus.'},
+    'accident|pa_executive_r|b4': {p:'PA_EXECUTIVE', note:'PA Executive Package 2 full (₱6,816–₱8,244/yr) — maximum executive accident coverage with all options.'},
+    'accident|pa_power_r|b1': {p:'PA_POWER', note:'PA Power Package 1 (₱212/yr basic) — ₱100k SA + DSC + TPD. Ideal for young adults in sports.'},
+    'accident|pa_power_r|b2': {p:'PA_POWER', note:'PA Power Package 2–3 (₱636–₱1,061/yr basic) — ₱300k–₱500k SA with Dangerous Sports Coverage.'},
+    'accident|pa_power_r|b3': {p:'PA_POWER', note:'PA Power Package 4 (₱2,122/yr basic or ₱2,727/yr full) — ₱1M coverage with full benefits.'},
+    'accident|pa_power_r|b4': {p:'PA_POWER', note:'PA Power Package 4 full with all options (₱2,727/yr) — maximum youth accident coverage.'},
+    'accident|pa_junior_r|b1': {p:'PA_JUNIOR', note:'PA Junior Package 1 (₱48.95/yr basic) — ₱30k coverage with Field Trip Coverage included.'},
+    'accident|pa_junior_r|b2': {p:'PA_JUNIOR', note:'PA Junior Package 2–3 (₱81–₱163/yr) — ₱50k–₱100k SA with FTC and HI.'},
+    'accident|pa_junior_r|b3': {p:'PA_JUNIOR', note:'PA Junior Package 4 basic (₱326/yr) — ₱200k coverage + BB + FTC + HI. Complete child protection.'},
+    'accident|pa_junior_r|b4': {p:'PA_JUNIOR', note:'PA Junior Package 4 with all options (₱533/yr) — maximum child accident plan. Very affordable.'},
+  };
+  return map[key] || null;
+}
+
+const COMPLEMENTARY = {
+  protection: 'Before committing to life insurance, ensure you have 3–6 months of living expenses in an emergency fund. Then consider adding PRUHealth FamLove for critical illness coverage alongside your life plan.',
+  health: 'Pair your health plan with PRU Personal Accident — standard packages start at ₱208/yr and cover accidental death, dismemberment, and TPD independently.',
+  retirement: 'Pair your retirement plan with income protection: PRULife Your Term provides maximum death benefit coverage at the lowest cost while your retirement fund grows.',
+  education: 'The Payor Waiver rider is critical for education plans — it waives future premiums if the parent/policyowner passes away, ensuring the education fund is never interrupted.',
+  investment: 'Before investment-linked products, ensure you have: (1) emergency fund, (2) term or life insurance for income protection, (3) health/accident coverage. Investments should come third.',
+  accident: 'PA plans cover accidents only. Add PRULife Your Term for life coverage, and PRUHealth FamLove for critical illness — these three together form a solid low-cost protection foundation.',
+};
+
+/* ══════════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════════ */
+let state = {step: 0, answers: {}, lead: {}};
+
+function getTypeChoices() {
+  const s = STEPS[1];
+  const prev = state.answers.goal;
+  return (typeof s.choices === 'object' && !Array.isArray(s.choices)) ? (s.choices[prev] || []) : s.choices;
+}
+
+function crumbLabels() {
+  const res = [];
+  for (const s of STEPS) {
+    const ans = state.answers[s.id];
+    if (!ans) break;
+    let choices = (s.id === 'type') ? getTypeChoices() : (Array.isArray(s.choices) ? s.choices : []);
+    const c = choices.find(x => x.id === ans);
+    if (c) res.push(c.amount || c.label);
+  }
+  return res;
+}
+
+/* ══════════════════════════════════════════════════════
+   RENDER
+══════════════════════════════════════════════════════ */
+function render() {
+  const el = document.getElementById('finder-content');
+  if (state.step < 3) renderStep(el);
+  else if (state.step === 3) renderLead(el);
+  else renderResult(el);
+}
+
+function renderProgress(current) {
+  return `<div class="progress-wrap"><div class="progress-steps">
+    ${STEP_LABELS.map((l,i) => {
+      let cls = i < current ? 'done' : i === current ? 'active' : 'pending';
+      return `<div class="prog-step ${cls}">
+        <div class="prog-dot ${cls}">${cls === 'done' ? '✓' : i+1}</div>
+        <div class="prog-label ${cls === 'active' ? 'active' : ''}">${l}</div>
+      </div>`;
+    }).join('')}
+  </div></div>`;
+}
+
+function renderBreadcrumb() {
+  const crumbs = crumbLabels();
+  if (!crumbs.length) return '<div style="min-height:22px"></div>';
+  return `<div class="breadcrumb"><span>Path:</span>
+    ${crumbs.map((c,i) => `${i>0?'<span class="sep">›</span>':''}<span class="crumb">${c}</span>`).join('')}
+  </div>`;
+}
+
+function renderStep(el) {
+  const idx = state.step;
+  const s = STEPS[idx];
+  const choices = idx === 1 ? getTypeChoices() : (Array.isArray(s.choices) ? s.choices : []);
+  const sel = state.answers[s.id];
+
+  el.innerHTML = `<div class="fade-in">
+    ${renderProgress(idx)}
+    ${renderBreadcrumb()}
+    <div class="step-label">Step ${s.stepNum} of 3</div>
+    <div class="step-question">${s.question}</div>
+    <div class="step-hint">${s.hint}</div>
+    ${s.id === 'budget' ? renderBudgetChoices(choices, sel) : renderChoices(choices, sel, s.id)}
+    <div class="nav-row">
+      <button class="btn-back" onclick="back()" ${idx===0?'style="visibility:hidden"':''}>← Back</button>
+      <button class="btn-next" onclick="next()" ${!sel?'disabled':''}>
+        ${idx < 2 ? 'Next step →' : 'Continue →'}
+      </button>
+    </div>
+  </div>`;
+}
+
+function renderChoices(choices, sel, stepId) {
+  return `<div class="choices">${choices.map(c => `
+    <button class="choice-btn ${sel===c.id?'selected':''}" onclick="select('${stepId}','${c.id}')">
+      <div class="sel-dot" style="margin-top:6px"></div>
+      <span class="choice-icon">${c.icon}</span>
+      <div><div class="choice-label">${c.label}</div><div class="choice-desc">${c.desc}</div></div>
+    </button>`).join('')}</div>`;
+}
+
+function renderBudgetChoices(choices, sel) {
+  return `<div class="budget-grid">${choices.map(c => `
+    <button class="budget-btn ${sel===c.id?'selected':''}" onclick="select('budget','${c.id}')">
+      <div class="budget-amount">${c.amount}</div>
+      <div class="budget-label">${c.label}</div>
+      <div class="budget-label" style="margin-top:6px;font-size:11px;line-height:1.4">${c.desc}</div>
+    </button>`).join('')}</div>`;
+}
+
+function renderLead(el) {
+  el.innerHTML = `<div class="fade-in">
+    ${renderProgress(3)}
+    ${renderBreadcrumb()}
+    <div class="lead-header">
+      <div class="lead-icon">🔒</div>
+      <div class="lead-header-text">
+        <h3>Almost there — just a few details</h3>
+        <p>Your personalized plan recommendation is ready. Fill in your details so a licensed advisor can walk you through it.</p>
+      </div>
+    </div>
+    <div class="form-3col">
+      <div class="form-row">
+        <label>First name <span>*</span></label>
+        <input type="text" id="f-fname" placeholder="Maria" autocomplete="given-name"/>
+        <div class="field-error" id="err-fname"></div>
+      </div>
+      <div class="form-row">
+        <label>Middle name</label>
+        <input type="text" id="f-mname" placeholder="Cruz" autocomplete="additional-name"/>
+      </div>
+      <div class="form-row">
+        <label>Surname <span>*</span></label>
+        <input type="text" id="f-lname" placeholder="Santos" autocomplete="family-name"/>
+        <div class="field-error" id="err-lname"></div>
+      </div>
+    </div>
+    <div class="form-2col">
+      <div class="form-row">
+        <label>Mobile number <span>*</span></label>
+        <input type="tel" id="f-mobile" placeholder="09171234567" maxlength="12"/>
+        <div class="field-error" id="err-mobile"></div>
+      </div>
+      <div class="form-row">
+        <label>Email address <span>*</span></label>
+        <input type="email" id="f-email" placeholder="maria@email.com"/>
+        <div class="field-error" id="err-email"></div>
+      </div>
+    </div>
+    <div class="form-2col">
+      <div class="form-row">
+        <label>Birthday <span>*</span></label>
+        <input type="date" id="f-bday"/>
+        <div class="field-error" id="err-bday"></div>
+      </div>
+      <div class="form-row">
+        <label>Occupation <span>*</span></label>
+        <select id="f-occ">
+          <option value="">Select...</option>
+          <option>Employee (private company)</option>
+          <option>Government employee</option>
+          <option>Self-employed / freelancer</option>
+          <option>OFW / seafarer</option>
+          <option>Business owner</option>
+          <option>Engineer / technical professional</option>
+          <option>Doctor / medical professional</option>
+          <option>Lawyer / legal professional</option>
+          <option>Teacher / professor</option>
+          <option>Skilled worker / tradesperson</option>
+          <option>Student</option>
+          <option>Homemaker</option>
+          <option>Retired</option>
+          <option>Other</option>
+        </select>
+        <div class="field-error" id="err-occ"></div>
+      </div>
+    </div>
+    <div id="sheets-status"></div>
+    <div class="consent-box">
+      <label class="consent-check">
+        <input type="checkbox" id="f-consent"/>
+        <p><strong>I consent</strong> to Pru Life UK and its authorized financial advisors contacting me via phone, SMS, or email to discuss my insurance inquiry. I understand this is for advisory purposes only and does not obligate me to purchase any product.</p>
+      </label>
+      <div class="consent-note">Your information is collected solely for the purpose of this inquiry and will not be sold to third parties. By submitting, you agree to the data privacy terms consistent with the Data Privacy Act of 2012 (RA 10173).</div>
+    </div>
+    <button class="btn-submit" id="btn-submit" onclick="submitLead()">
+      <div class="spinner"></div>
+      <span class="btn-text">See my recommendation →</span>
+    </button>
+    <div class="nav-row" style="border-top:none;margin-top:8px;padding-top:0">
+      <button class="btn-back" onclick="back()">← Back</button>
+      <div></div>
+    </div>
+  </div>`;
+}
+
+function renderResult(el) {
+  const {goal, type, budget} = state.answers;
+  const {fname} = state.lead;
+  const route = routeProduct(goal, type, budget);
+  const prod = route ? PRODUCT_DB[route.p] : null;
+  const crumbs = crumbLabels();
+
+  let resultHTML = '';
+  if (prod) {
+    const hasTable = prod.packages && prod.premiums;
+    resultHTML = `
+    <div class="result-hero">
+      <div class="result-hero-label">✓ Recommended for ${fname||'you'}</div>
+      <div class="result-hero-name">${prod.name}</div>
+      <div class="result-hero-type">${prod.type}</div>
+      <div class="result-hero-desc">${prod.idealFor}</div>
+      <div class="result-tags">${prod.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    </div>
+
+    ${route.note ? `<div class="result-card">
+      <div class="result-card-header"><span class="result-card-title">Advisor note for your selection</span><span class="badge-pill badge-key">Match</span></div>
+      <div class="result-card-body">${route.note}</div>
+    </div>` : ''}
+
+    <div class="result-card">
+      <div class="result-card-header"><span class="result-card-title">Key product details</span><span class="badge-pill badge-comp">From official primer</span></div>
+      <div class="result-card-body">
+        <ul>
+          <li><strong>Product type:</strong> ${prod.productType}</li>
+          <li><strong>Payment term:</strong> ${prod.payTerm}</li>
+          <li><strong>Benefit term:</strong> ${prod.benefitTerm}</li>
+          <li><strong>Issue age:</strong> ${prod.issueAge}</li>
+          <li><strong>Currency:</strong> ${prod.currency}</li>
+          <li><strong>Indicative premium:</strong> ${prod.minPremium}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-card-header"><span class="result-card-title">Key benefits</span><span class="badge-pill badge-key">Core coverage</span></div>
+      <div class="result-card-body"><ul>${prod.keyBenefits.map(b=>`<li>${b}</li>`).join('')}</ul></div>
+    </div>
+
+    ${hasTable ? `
+    <div class="result-card">
+      <div class="result-card-header"><span class="result-card-title">Package summary</span><span class="badge-pill badge-tip">Indicative</span></div>
+      <div class="result-card-body" style="overflow-x:auto">
+        <table class="pkg-table">
+          <thead><tr>${prod.packages.headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+          <tbody>${prod.packages.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+        </table>
+        <div style="margin-top:12px;font-size:12px;font-weight:600;color:var(--ink2)">${prod.premiums.label}</div>
+        <table class="pkg-table" style="margin-top:6px">
+          <thead><tr>${prod.premiums.rows[0].map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+          <tbody>${prod.premiums.rows.slice(1).map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+        </table>
+      </div>
+    </div>` : ''}
+
+    ${prod.optionalRiders && prod.optionalRiders[0] !== 'None' ? `
+    <div class="result-card">
+      <div class="result-card-header"><span class="result-card-title">Optional riders available</span><span class="badge-pill badge-comp">Attachable</span></div>
+      <div class="result-card-body"><ul>${prod.optionalRiders.map(r=>`<li>${r}</li>`).join('')}</ul></div>
+    </div>` : ''}
+
+    <div class="result-card">
+      <div class="result-card-header"><span class="result-card-title">Also consider</span><span class="badge-pill badge-comp">Complementary</span></div>
+      <div class="result-card-body">${COMPLEMENTARY[goal]||''}</div>
+    </div>`;
+  } else {
+    resultHTML = `<div class="result-card">
+      <div class="result-card-header"><span class="result-card-title">Custom plan recommended</span></div>
+      <div class="result-card-body">Based on your selections, a tailored Financial Needs Analysis (FNA) is the best next step. Your advisor will prepare a custom illustration for you.</div>
+    </div>`;
+  }
+
+  el.innerHTML = `<div class="fade-in">
+    ${renderProgress(4)}
+    ${crumbs.length ? `<div class="breadcrumb"><span>Your path:</span>${crumbs.map((c,i)=>`${i>0?'<span class="sep">›</span>':''}<span class="crumb">${c}</span>`).join('')}</div>` : ''}
+    ${resultHTML}
+    <div class="result-card" style="border-left:3px solid var(--red)">
+      <div class="result-card-header"><span class="result-card-title">⚡ Financial planning sequence</span></div>
+      <div class="result-card-body">Always follow this order: (1) Emergency Fund — 3–6 months of expenses first; (2) Protection Insurance — income replacement and family security; (3) Savings & Investments — education, retirement, and wealth building. Insurance manages risk. Investments grow wealth. Both are essential.</div>
+    </div>
+    <button class="learn-btn" onclick="sendToAdvisor()">📞 Request a free consultation with an advisor →</button>
+    <button class="restart-btn" onclick="restart()">Start over ↺</button>
+  </div>`;
+}
+
+/* ══════════════════════════════════════════════════════
+   INTERACTIONS
+══════════════════════════════════════════════════════ */
+function select(stepId, choiceId) {
+  state.answers[stepId] = choiceId;
+  // Reset downstream answers if step 1 goal changed
+  if (stepId === 'goal') { delete state.answers.type; delete state.answers.budget; }
+  if (stepId === 'type') { delete state.answers.budget; }
+  render();
+}
+
+function next() {
+  const step = STEPS[state.step];
+  if (!state.answers[step.id]) return;
+  state.step++;
+  render();
+  document.getElementById('finder').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function back() {
+  if (state.step === 0) return;
+  state.step--;
+  render();
+  document.getElementById('finder').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function restart() {
+  state = {step:0, answers:{}, lead:{}};
+  render();
+  document.getElementById('finder').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* ── Lead submission with Google Sheets integration ── */
+function showErr(field, msg) {
+  const e = document.getElementById('err-'+field);
+  const i = document.getElementById('f-'+field);
+  if (e) e.textContent = msg;
+  if (i) i.classList.add('input-err');
+}
+
+function submitLead() {
+  const fname  = document.getElementById('f-fname')?.value.trim();
+  const mname  = document.getElementById('f-mname')?.value.trim();
+  const lname  = document.getElementById('f-lname')?.value.trim();
+  const mobile = document.getElementById('f-mobile')?.value.trim();
+  const email  = document.getElementById('f-email')?.value.trim();
+  const bday   = document.getElementById('f-bday')?.value;
+  const occ    = document.getElementById('f-occ')?.value;
+  const consent= document.getElementById('f-consent')?.checked;
+
+  ['fname','lname','mobile','email','bday','occ'].forEach(f => {
+    const e = document.getElementById('err-'+f);
+    const i = document.getElementById('f-'+f);
+    if (e) e.textContent = '';
+    if (i) i.classList.remove('input-err');
+  });
+
+  let valid = true;
+  if (!fname) { showErr('fname','Please enter your first name.'); valid=false; }
+  if (!lname) { showErr('lname','Please enter your surname.'); valid=false; }
+  if (!mobile||!/^(09|\+639)\d{9}$/.test(mobile.replace(/\s/g,''))) { showErr('mobile','Enter a valid PH mobile number (e.g. 09171234567).'); valid=false; }
+  if (!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('email','Enter a valid email address.'); valid=false; }
+  if (!bday) { showErr('bday','Please enter your birthday.'); valid=false; }
+  if (!occ) { showErr('occ','Please select your occupation.'); valid=false; }
+  if (!consent) { alert('Please tick the consent checkbox to proceed.'); valid=false; }
+  if (!valid) return;
+
+  const btn = document.getElementById('btn-submit');
+  btn.classList.add('loading'); btn.disabled = true;
+  state.lead = {fname, mname, lname, mobile, email, bday, occ};
+
+  const {goal, type, budget} = state.answers;
+  const route = routeProduct(goal, type, budget);
+  const prod = route ? PRODUCT_DB[route.p] : null;
+
+  const payload = {
+    firstName: fname,
+    middleName: mname,
+    lastName: lname,
+    contactNumber: mobile,
+    emailAddress: email,
+    birthday: bday,
+    occupation: occ,
+    goal: goal,
+    planType: type,
+    budget: budget,
+    recommendedProduct: prod ? prod.name : 'Custom Plan',
+    submittedAt: new Date().toISOString(),
+    source: window.location.href,
+  };
+
+  // Try Google Sheets submission
+  if (GS_CONFIG.SCRIPT_URL && GS_CONFIG.SCRIPT_URL !== 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
+    fetch(GS_CONFIG.SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    }).then(() => {
+      showSheetsStatus('success');
+    }).catch(() => {
+      showSheetsStatus('error');
+    });
+  }
+
+  console.log('Lead captured:', payload);
+
+  setTimeout(() => {
+    state.step = 4;
+    render();
+    document.getElementById('finder').scrollIntoView({behavior:'smooth', block:'start'});
+  }, 1400);
+}
+
+function showSheetsStatus(type) {
+  const el = document.getElementById('sheets-status');
+  if (!el) return;
+  if (type === 'success') {
+    el.innerHTML = `<div class="sheets-notice">✓ Your details have been saved to our leads database.</div>`;
+  } else {
+    el.innerHTML = `<div class="sheets-notice error">⚠ Could not connect to database. Your details will still be sent to the advisor via email.</div>`;
+  }
+}
+
+function sendToAdvisor() {
+  const {fname, lname, mobile, email, bday, occ} = state.lead;
+  const {goal, type, budget} = state.answers;
+  const route = routeProduct(goal, type, budget);
+  const prod = route ? PRODUCT_DB[route.p] : null;
+  const subject = `PRULife UK Inquiry — ${prod?.name||'Custom Plan'} — ${fname} ${lname}`;
+  const body = `Hi,\n\nI completed the Pru Life UK Plan Finder and received the following recommendation:\n\nClient details:\nName: ${fname} ${lname}\nMobile: ${mobile}\nEmail: ${email}\nBirthday: ${bday}\nOccupation: ${occ}\n\nFinancial profile:\nGoal: ${goal}\nPlan type: ${type}\nBudget tier: ${budget}\nRecommended plan: ${prod?.name||'Custom'}\n\nPlease contact me to schedule a free Financial Needs Analysis (FNA) consultation. Thank you.`;
+  window.location.href = `mailto:your.advisor@prulifeuk.com.ph?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+function toggleFaq(el) { el.classList.toggle('open'); }
+
+render();
+</script>
+
+<!--
+════════════════════════════════════════════════════════════
+GOOGLE APPS SCRIPT — PASTE THIS IN YOUR GOOGLE APPS SCRIPT
+
+1. Open your Google Sheet
+2. Extensions → Apps Script
+3. Delete existing code and paste the following:
+4. Save → Deploy → New Deployment → Web App
+5. Execute as: Me | Who has access: Anyone
+6. Copy the Web App URL and paste into GS_CONFIG.SCRIPT_URL above
+
+─── APPS SCRIPT CODE ───────────────────────────────────────
+
+function doPost(e) {
+  try {
+    const data = JSON.parse(e.postData.contents);
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    
+    const headers = ['Timestamp', 'First Name', 'Middle Name', 'Surname', 'Contact Number', 'Email Address', 'Birthday', 'Occupation', 'Goal', 'Plan Type', 'Budget Tier', 'Recommended Product', 'Source URL'];
+    
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(headers);
+      sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold').setBackground('#C8102E').setFontColor('#ffffff');
+    }
+    
+    sheet.appendRow([
+      new Date(data.submittedAt),
+      data.firstName || '',
+      data.middleName || '',
+      data.lastName || '',
+      data.contactNumber || '',
+      data.emailAddress || '',
+      data.birthday || '',
+      data.occupation || '',
+      data.goal || '',
+      data.planType || '',
+      data.budget || '',
+      data.recommendedProduct || '',
+      data.source || '',
+    ]);
+    
+    return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({status:'error', message: err.message})).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet(e) {
+  return ContentService.createTextOutput('PRULife UK Lead Capture — Active').setMimeType(ContentService.MimeType.TEXT);
+}
+
+────────────────────────────────────────────────────────────
+-->
+
+</body>
+</html>
